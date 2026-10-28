@@ -129,3 +129,5 @@ footer a{display:inline-block;padding:10px 0}
 .card .vck{list-style:none;padding:0;margin:.4rem 0 0;font-size:.82rem}.card .vck li{margin:.15rem 0}
 .card .vck .ok::before{content:"✓ ";color:#0E6E6E}.card .vck .bad::before{content:"✗ ";color:#B45309}.card .vck .na::before{content:"· ";color:#6B7280}
 .card .src{font-size:.8rem}.card .src a{color:#0E6E6E}.card small{display:block;color:#6B7280;font-size:.78rem;margin-top:.3rem}
+
+.byp{margin-top:12px;padding:10px 12px;border:1px solid #f0c36d;border-radius:10px;background:#fff8e6}.byp ul{margin:6px 0;padding-inline-start:18px}.byp li{margin:3px 0}

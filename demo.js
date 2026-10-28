@@ -1,5 +1,15 @@
 // הדגמה: אם window.SAPAKLI_API מוגדר (config.js) — חיפוש אמיתי מול השרת; אחרת הקלטה מ-docs/demo-results.md (28.10.2026).
 const API=(window.SAPAKLI_API||'').replace(/\/$/,'');
+// "לפני שמשלמים" — זהה ל-app/vetting.py BEFORE_YOU_PAY (מחקר Reddit 28.10.2026). בלי מחירים.
+const BYP={title:'לפני שמשלמים',items:[
+ 'שיחת וידאו חיה מתוך המפעל (לא סרטון מוקלט). סירוב הוא סימן אזהרה.',
+ 'דוגמת ייצור לפני ייצור מלא, עם מפרט שאושר בכתב.',
+ 'בדיקה של חברת בדיקה חיצונית לפני תשלום היתרה.',
+ 'שם המוטב והבנק בהעברה תואמים לשם ברישיון העסק ובחשבונית.'],
+ note:'את הצעדים האלה עושים בעצמכם מול הספק. אנחנו לא מבצעים אותם ולא גובים עליהם.'};
+const REG_NOTE='רישום ברשם הסיני: נדרשת בדיקה ידנית. תג Alibaba Verified/Gold ו-Trade Assurance לא נחשבים אצלנו אימות.';
+function byp(b){b=b&&Array.isArray(b.items)?{title:b.title,items:b.items.map(i=>i.label||i),note:b.note}:BYP;
+ return `<div class="byp" role="note"><strong>${esc(b.title||BYP.title)}</strong><ul>${b.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>${b.note?`<small>${esc(b.note)}</small>`:''}</div>`}
 const SHIRTS=[
  ['Jiangxi Anka Clothing Co., Ltd.','₪16 ליח׳','לא ידוע'],
  ['Guangzhou Kangnai Apparel Co., Ltd.','₪8–19 ליח׳','100 יח׳'],
@@ -18,6 +28,7 @@ function card(s){const v=s.verification||null;const st=v&&v.status==='partial'?[
  if(v){h+='<ul class="vck">'+(v.checks||[]).map(c=>`<li class="${c.ok?'ok':'bad'}">${esc(c.label)}${c.evidence&&!okUrl(c.evidence)?': '+esc(c.evidence):''}${okUrl(c.source)?` (<a href="${esc(c.source)}" target="_blank" rel="noopener nofollow">מקור</a>)`:''}</li>`).join('')+
   (v.not_checked||[]).map(n=>`<li class="na">עוד לא נבדק: ${esc(n)}</li>`).join('')+'</ul>';
   (v.cautions||[]).forEach(c=>h+=`<small>${esc(c)}</small>`);if(v.claims_note)h+=`<small>${esc(v.claims_note)}</small>`;}
+ const rg=s.registry||(v&&v.registry);if(!rg||rg.registry_status==='manual_check_needed')h+=`<small>${esc(REG_NOTE)}</small>`;
  const w=okUrl(s.website);if(w)h+=`<p class="src"><a href="${esc(w)}" target="_blank" rel="noopener nofollow">אתר הספק</a>${v&&v.checked_at?' · נבדק ב-'+fmtDate(v.checked_at):''}</p>`;
  return h+'</article>'}
 async function live(t){const r=await fetch(API+'/api/demo/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request:t,session_id:sid})});
@@ -29,7 +40,7 @@ async function run(t){if(busy)return;busy=true;go.disabled=true;chat.setAttribut
    else if(r.s==='rate'){el('a','יותר מדי בקשות. נסו שוב בעוד דקה.')}
    else{const j=r.j;if(j.status==='question'){pending=true;el('a',esc(j.question||j.reply));q.value='';q.focus();return}
     pending=false;if(j.status==='blocked'){el('a',esc(j.reply))}
-    else if(j.suppliers&&j.suppliers.length){el('a',esc(j.summary||'')+'. המחיר לפני משלוח, מכס ומע"מ:<div class="cards">'+j.suppliers.map(card).join('')+'</div>')}
+    else if(j.suppliers&&j.suppliers.length){el('a',esc(j.summary||'')+'. המחיר לפני משלוח, מכס ומע"מ:<div class="cards">'+j.suppliers.map(card).join('')+'</div>'+byp(j.before_you_pay))}
     else el('a',esc(j.note||'עוד אין לנו ספקים מתאימים במאגר, ולא נמציא כאלה.'));
     if(typeof j.left==='number')el('a',`נשארו לכם ${j.left} חיפושים חינמיים.`)}
    el('a cta','<a class="btn amber" href="#waitlist">רוצים את זה בצ׳אט שלכם? הצטרפו לרשימה</a> <button type="button" class="lnkb" id="again">חיפוש אחר</button>');
@@ -39,7 +50,7 @@ async function run(t){if(busy)return;busy=true;go.disabled=true;chat.setAttribut
  el('a','לאן המשלוח, לישראל או למדינה אחרת?');await wait(slow);el('u','ישראל');d=dots();await wait(slow*1.4);d.remove();
  if(kind==='shirt'){
   el('a','הנה ספקים שמצאתי. המחיר לפני משלוח, מכס ומע"מ, מעוגל, לפי 3.06 ₪ לדולר (28.10.2026):<div class="cards">'+SHIRTS.map(s=>
-   `<article class="card"><h3 dir="ltr">${s[0]}</h3><span class="vb no">לא מאומת</span><dl><dt>מחיר</dt><dd>${s[1]}</dd><dt>מינימום</dt><dd>${s[2]}</dd></dl></article>`).join('')+'</div>');
+   `<article class="card"><h3 dir="ltr">${s[0]}</h3><span class="vb no">לא מאומת</span><dl><dt>מחיר</dt><dd>${s[1]}</dd><dt>מינימום</dt><dd>${s[2]}</dd></dl></article>`).join('')+'</div>'+`<small>${esc(REG_NOTE)}</small>`+byp());
  }else if(kind==='other'){
   el('a','ההדגמה המוקלטת כוללת רק דוגמת חולצות. החיפוש האמיתי ייפתח כשהשרת יהיה זמין.');
  }else el('a','בהדגמה המוקלטת אין דוגמה לזה. במאגר יש ספקים לאריזות ולתכשיטי כסף, והם יופיעו כשהשרת יהיה זמין.');
