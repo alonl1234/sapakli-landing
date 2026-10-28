@@ -1,6 +1,6 @@
 <!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sapakli – ספקים מתוך הצ׳אט שלכם</title>
-<meta name="description" content="כותבים מה צריך, מקבלים ספקים עם מינימום הזמנה וטווח מחיר. נסו עכשיו באתר, 3 חיפושים חינם. החיבור לצ׳אט שלכם: הצטרפו לרשימת ההמתנה.">
+<meta name="description" content="חיפוש ספקים מתוך הצ׳אט שאתם כבר עובדים בו: ChatGPT, Claude או כל סוכן AI, דרך MCP או API. נסו הדגמה והצטרפו לרשימת ההמתנה."><meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="icon" href="data:,"><link rel="stylesheet" href="style.css"></head><body>
@@ -9,28 +9,36 @@
  <span class="navl"><a href="#connect">איך משתמשים</a><a href="#faq">שאלות</a><a class="btn sm" href="#waitlist">רשימת המתנה</a></span></nav>
 <main>
 <!-- מבנה לפי jensen-keynote-product-format: בעיה → פעם/היום → חשיפה → דמו → איך בצ׳אט → אקוסיסטם → CTA -->
-<!-- 🧪 שורת הבעיה בלי מספרים: טרם אומת כאב (PV) על מציאת ספקים -->
 <header class="hero wrap" id="try">
- <p class="eyebrow r">מחפשים ספק למוצר בלי מותג?</p>
- <p class="prob r">עשרות אתרים, מאות תוצאות, ואף אחת לא אומרת לכם מינימום הזמנה ומחיר.</p>
- <h1 class="r">כותבים מה צריך.<br class="d">מקבלים ספקים.</h1>
- <p class="lead r">ספקים עם מינימום הזמנה וטווח מחיר, וליד כל אחד כתוב אם בדקנו אותו. נסו עכשיו, בלי הרשמה:</p>
- <form id="f" class="ask r" role="search" aria-label="נסו את ההדגמה">
+ <p class="eyebrow r">חיפוש ספקים למוצרים בלי מותג</p>
+ <h1 class="r">ספקים, ישר מתוך<br class="d"> הצ׳אט שאתם כבר עובדים בו.</h1>
+ <p class="lead r">כותבים ל-ChatGPT, ל-Claude או לכל סוכן AI אחר מה צריך, ומקבלים ספקים עם מחיר, מינימום הזמנה וסטטוס בדיקה. החיבור דרך MCP או API.</p>
+ <p class="try-l r" id="tryl">נסו את ההדגמה כאן, בלי הרשמה:</p>
+ <form id="f" class="ask r" role="search" aria-labelledby="tryl">
   <span class="pr" aria-hidden="true">›</span>
   <label for="q" class="sr">מה אתם מחפשים?</label>
   <input id="q" autocomplete="off" placeholder="חולצות כותנה לנשים, 500 יח׳">
-  <button class="btn" type="submit">חפשו</button>
+  <button class="btn" type="submit" id="go">חפשו</button>
  </form>
- <div class="ex r" aria-label="דוגמאות"><span>אפשר גם:</span>
+ <div class="ex r" role="group" aria-label="דוגמאות לחיפוש"><span>או בחרו דוגמה:</span>
   <button type="button" data-q="חולצות כותנה לנשים, 500 יח׳">חולצות כותנה</button>
   <button type="button" data-q="קופסאות מתנה ממותגות, 1000 יח׳">קופסאות מתנה</button>
   <button type="button" data-q="שרשראות כסף 925, 200 יח׳">שרשראות כסף 925</button>
  </div>
  <section class="chat" aria-live="polite" aria-label="תוצאות ההדגמה" hidden>
-  <p class="badge">הדגמה · נתונים מהמאגר מ-28.10.2026, לא מאומתים</p>
+  <p class="badge">הדגמה מוקלטת · נתונים מהמאגר מ-28.10.2026, לא מאומתים</p>
   <div id="log"></div>
  </section>
 </header>
+
+<section class="works" aria-labelledby="ww">
+ <p class="wrap cap" id="ww">עובד עם צ׳אטים וסוכנים שתומכים ב-MCP, לפי התיעוד הרשמי שלהם</p>
+ <div class="marq"><ul class="track">
+  <li><span class="tx">Claude</span></li><li><span class="tx">ChatGPT</span></li><li><span class="tx">Gemini CLI</span></li>
+  <li><span class="tx">Grok API</span></li><li><span class="tx">Copilot Studio</span></li><li><span class="tx">Cursor</span></li>
+  <li><span class="tx">Perplexity</span></li><li><span class="tx">Mistral Le Chat</span></li>
+ </ul></div>
+</section>
 
 <section class="wrap" aria-labelledby="ba">
  <h2 id="ba" class="sr">פעם והיום</h2>
@@ -42,9 +50,9 @@
 
 <section class="wrap how" aria-labelledby="hw">
  <div>
-  <p class="eyebrow r">בקרוב · רשימת המתנה</p>
-  <h2 id="hw" class="r">אותו דבר, בתוך הצ׳אט שלכם.</h2>
-  <p class="lead sm r">ChatGPT, Claude, Gemini או כל צ׳אט אחר. בלי אתר נוסף ובלי אפליקציה חדשה. החיבור עוד לא פעיל, ונודיע לכם כשהוא עולה.</p>
+  <p class="eyebrow r">איך זה ייראה אצלכם · בקרוב</p>
+  <h2 id="hw" class="r">שואלים בצ׳אט. מקבלים ספקים.</h2>
+  <p class="lead sm r">בלי אתר נוסף ובלי אפליקציה חדשה. החיבור לצ׳אט עוד לא פעיל. מי שברשימת ההמתנה יקבל אותו ראשון.</p>
   <ol class="steps">
    <li class="r"><span class="mono">01</span><b>כותבים כמו לאדם</b>מה המוצר, כמה יחידות.</li>
    <li class="r"><span class="mono">02</span><b>שאלת הבהרה, אם צריך</b>למשל לאן המשלוח. היא לא נספרת כחיפוש.</li>
@@ -61,21 +69,13 @@
  </figure>
 </section>
 
-<section class="works" aria-labelledby="ww">
- <p class="wrap mono" id="ww">תומכים בחיבור כזה (MCP) לפי התיעוד הרשמי שלהם</p>
- <div class="marq"><ul class="track">
-  <li><span class="tx">Claude</span></li><li><span class="tx">ChatGPT</span></li><li><span class="tx">Gemini CLI</span></li>
-  <li><span class="tx">Grok API</span></li><li><span class="tx">Copilot Studio</span></li><li><span class="tx">Cursor</span></li>
-  <li><span class="tx">Perplexity</span></li><li><span class="tx">Mistral Le Chat</span></li><li><span class="tx">n8n</span></li>
- </ul></div>
-</section>
 
 <section class="wrap" id="waitlist" aria-labelledby="wl"><div class="end r">
  <h2 id="wl">רוצים את זה בצ׳אט שלכם?</h2>
- <p>השאירו מייל ונודיע כשהחיבור עולה. לא נשלח שום דבר אחר.</p>
- <form id="wlf" class="wl" novalidate>
+ <p id="wld">השאירו מייל ונשלח לכם את פרטי החיבור כשהם מוכנים. רק את זה, בלי ניוזלטר.</p>
+ <form id="wlf" class="wl" novalidate aria-describedby="wld">
   <label for="em" class="sr">אימייל</label>
-  <input id="em" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="you@gmail.com" dir="ltr">
+  <input id="em" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="you@gmail.com" dir="ltr" aria-describedby="wlm">
   <label for="ch" class="sr">באיזה צ׳אט אתם משתמשים? (לא חובה)</label>
   <select id="ch" name="chat"><option value="">באיזה צ׳אט? (לא חובה)</option><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="grok">Grok</option><option value="copilot">Copilot</option><option value="cursor">Cursor</option><option value="other">אחר</option></select>
   <div class="hp" aria-hidden="true"><label for="website">אתר</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
@@ -83,13 +83,13 @@
  </form>
  <p id="wlm" class="wlm" role="status" aria-live="polite"></p>
  <div id="wli" class="wli" hidden>
-  <p><b>אתם ברשימה.</b> זה הקישור האישי שלכם. חבר שנכנס דרכו ומבצע 3 חיפושים אמיתיים מזכה אתכם ב-3 חיפושים נוספים, עד 3 חברים.</p>
+  <p><b>אתם ברשימה.</b> זה הקישור האישי שלכם. על כל חבר שנכנס דרכו ומבצע 3 חיפושים אמיתיים, תקבלו 3 חיפושים נוספים שלא פגים, עד 3 חברים.</p>
   <div class="cp"><input id="lnk" readonly dir="ltr" aria-label="הקישור האישי שלכם"><button type="button" class="btn sm" id="cpb">העתיקו</button></div>
  </div>
 </div></section>
 
 <section class="wrap" aria-labelledby="ns">
- <h2 id="ns" class="r">בלי מנוי.</h2>
+ <h2 id="ns" class="r">בלי מנוי. בלי כרטיס אשראי.</h2>
  <dl class="stats r">
   <div><dt>3</dt><dd>חיפושים חינם, מתחדשים כל 72 שעות</dd></div>
   <div><dt>0</dt><dd>חיפושים נספרים על שאלת הבהרה</dd></div>
@@ -103,16 +103,10 @@
  <h2 id="cn" class="r">איך משתמשים.</h2>
  <p class="lead sm r">MCP הוא תקן פתוח שמאפשר לצ׳אט שלכם להשתמש בכלים חיצוניים, כמו חיפוש ספקים.</p>
  <div class="ways">
-  <div class="r"><h3>באתר <span class="live">זמין עכשיו</span></h3><p>נסו את ההדגמה למעלה. חיפוש אמיתי: כניסה עם Google.</p></div>
-  <div class="r"><h3>בצ׳אט <span class="soon">רשימת המתנה</span></h3><p>מוסיפים את Sapakli כשרת MCP בהגדרות הצ׳אט.</p><code dir="ltr">https://YOUR-DOMAIN/mcp</code></div>
+  <div class="r"><h3>באתר <span class="live">זמין עכשיו</span></h3><p>נסו את ההדגמה למעלה. לחיפוש אמיתי נכנסים עם Google.</p></div>
+  <div class="r"><h3>בצ׳אט <span class="soon">רשימת המתנה</span></h3><p>מוסיפים את Sapakli כשרת MCP בהגדרות הצ׳אט.</p><code dir="ltr">Settings → Connectors → Add MCP server</code></div>
   <div class="r"><h3>API <span class="soon">רשימת המתנה</span></h3><p>למפתחים, לאוטומציות ולמערכות שלכם.</p><code dir="ltr">POST /api/v1/search</code></div>
  </div>
-</section>
-
-<section class="wrap" aria-labelledby="rf">
- <h2 id="rf" class="r">מכירים עוד מישהו שמחפש ספקים?</h2>
- <p class="lead sm r">שלחו לו את הקישור האישי שלכם. אחרי שהוא מבצע 3 חיפושים אמיתיים, אתם מקבלים 3 חיפושים נוספים שלא פגים. עד 3 חברים, כלומר עד 9 חיפושים. החבר מקבל את 3 החיפושים החינמיים הרגילים.</p>
- <p class="r"><a class="btn" href="#waitlist">קבלו קישור אישי</a></p>
 </section>
 
 <section class="wrap narrow" id="faq" aria-labelledby="fq"><h2 id="fq" class="r">שאלות.</h2>
@@ -120,17 +114,18 @@
 <details><summary>הספקים בדוקים?</summary><p>לא כולם. ליד כל ספק כתוב אם בדקנו אותו. אם כתוב "לא מאומת", בדקו בעצמכם לפני שאתם מזמינים.</p></details>
 <details><summary>המחיר כולל משלוח ומכס?</summary><p>לא. זה המחיר שהספק מפרסם, לפני משלוח, מכס ומע״מ.</p></details>
 <details><summary>מתי החיבור לצ׳אט יהיה זמין?</summary><p>עוד לא נקבע תאריך. מי שברשימת ההמתנה יקבל הודעה ראשון.</p></details>
+<details><summary>יש תוכנית חבר מביא חבר?</summary><p>כן. אחרי ההרשמה לרשימה תקבלו קישור אישי. על כל חבר שמבצע 3 חיפושים אמיתיים תקבלו 3 חיפושים נוספים שלא פגים, עד 3 חברים.</p></details>
 <details><summary>מה זה MCP?</summary><p>תקן פתוח שמאפשר לצ׳אטים כמו Claude ו-ChatGPT להשתמש בכלים חיצוניים. אתם מוסיפים כתובת אחת בהגדרות, וזהו.</p></details>
 </section>
 
 <section class="wrap" aria-labelledby="cl"><div class="close r">
  <h2 id="cl">ספקים, מתוך הצ׳אט שאתם כבר עובדים בו.</h2>
  <p class="lead sm">היום באתר. בקרוב בצ׳אט שלכם.</p>
- <p><a class="btn" href="#try">נסו עכשיו</a> <a class="btn ghost" href="#waitlist">הצטרפו לרשימה</a></p>
+ <p class="acts"><a class="btn amber" href="#waitlist">הצטרפו לרשימת ההמתנה</a> <a class="btn ghost" href="#try">נסו את ההדגמה</a></p>
 </div></section>
 </main>
-<footer class="wrap"><span>© 2026 Sapakli</span><span><a href="legal/terms.html">תנאי שימוש (טיוטה)</a> · <a href="legal/privacy.html">פרטיות (טיוטה)</a> · <a href="mailto:contact@YOUR-DOMAIN">יצירת קשר</a></span>
+<footer class="wrap"><span>© 2026 Sapakli</span><span><a href="legal/terms.html">תנאי שימוש (טיוטה)</a> · <a href="legal/privacy.html">פרטיות (טיוטה)</a></span>
 <small>שמות מוצרים שייכים לבעליהם. אין קשר או חסות. הרשימה מבוססת על התיעוד הרשמי של כל מוצר (docs/ai-connectors.md).</small></footer>
-<a class="sticky btn amber" href="#waitlist">הצטרפו לרשימת ההמתנה</a>
+<a class="sticky btn amber" href="#waitlist" id="stk">הצטרפו לרשימת ההמתנה</a>
 <script src="demo.js" defer></script>
 </body></html>
