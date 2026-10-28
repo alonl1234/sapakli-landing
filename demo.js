@@ -29,6 +29,9 @@ function card(s){const v=s.verification||null;const st=v&&v.status==='partial'?[
   (v.not_checked||[]).map(n=>`<li class="na">עוד לא נבדק: ${esc(n)}</li>`).join('')+'</ul>';
   (v.cautions||[]).forEach(c=>h+=`<small>${esc(c)}</small>`);if(v.claims_note)h+=`<small>${esc(v.claims_note)}</small>`;}
  const rg=s.registry||(v&&v.registry);if(!rg||rg.registry_status==='manual_check_needed')h+=`<small>${esc(REG_NOTE)}</small>`;
+ else{const rs=okUrl(rg.registry_source);const RS={active:['ok','רישום פעיל ברשם'],revoked:['bad','הרישום בוטל'],cancelled:['bad','הרישום נמחק'],abnormal:['bad','סטטוס חריג ברשם'],unknown:['na','סטטוס ברשם לא ידוע']}[rg.registry_status]||['na','סטטוס ברשם לא ידוע'];
+  const BT={factory:'מפעל',trading_company:'חברת סחר (מתווך)'}[rg.business_type];const LN={match:['ok','שם משפטי תואם'],mismatch:['bad','שם משפטי לא תואם']}[rg.legal_name_match];
+  h+='<ul class="vck reg">'+`<li class="${RS[0]}">${RS[1]}${rs?` (<a href="${esc(rs)}" target="_blank" rel="noopener nofollow">מקור</a>)`:''}${rg.registry_checked_at?' · '+fmtDate(rg.registry_checked_at):''}</li>`+(LN?`<li class="${LN[0]}">${LN[1]}</li>`:'')+(BT?`<li class="na">סוג עסק: ${BT}</li>`:'')+'</ul>'}
  const w=okUrl(s.website);if(w)h+=`<p class="src"><a href="${esc(w)}" target="_blank" rel="noopener nofollow">אתר הספק</a>${v&&v.checked_at?' · נבדק ב-'+fmtDate(v.checked_at):''}</p>`;
  return h+'</article>'}
 async function live(t){const r=await fetch(API+'/api/demo/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request:t,session_id:sid})});
