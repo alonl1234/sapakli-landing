@@ -79,7 +79,8 @@ const tr=document.querySelector('.track');if(tr)tr.innerHTML+=tr.innerHTML.repla
   const b=f.querySelector('button');b.disabled=true;b.setAttribute('aria-busy','true');m.textContent='שולחים...';
   try{if(!API){m.textContent='רשימת ההמתנה תיפתח בקרוב. תודה על הסבלנות!';return}
    const r=await fetch(API+'/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email:em,chat:f.chat.value||null,ref:ref&&/^[A-Za-z0-9]{4,16}$/.test(ref)?ref:null,website:f.website.value||null})});
+    body:JSON.stringify({email:em,chat:f.chat.value||null,ref:ref&&/^[A-Za-z0-9]{4,16}$/.test(ref)?ref:null,website:f.website.value||null,turnstile_token:(f.querySelector('[name="cf-turnstile-response"]')||{}).value||null})});
+   if(window.turnstile)try{turnstile.reset()}catch(_){}
    if(r.status===404||r.status===405||r.status>=500){m.textContent='רשימת ההמתנה תיפתח בקרוב. תודה על הסבלנות!';return}
    const j=await r.json().catch(()=>({}));
    if(!r.ok){m.textContent=(j.detail&&(j.detail.message||j.detail))||'משהו השתבש, נסו שוב.';return}
