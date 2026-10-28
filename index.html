@@ -10,10 +10,15 @@
 <main>
 <!-- מבנה לפי jensen-keynote-product-format: בעיה → פעם/היום → חשיפה → דמו → איך בצ׳אט → אקוסיסטם → CTA -->
 <header class="hero wrap" id="try">
+ <div class="ba r" aria-label="פעם והיום">
+  <div><span class="k">פעם</span><p>מחפשים באתרי סיטונאות, בקבוצות ובמיילים, ומשווים לבד.</p></div>
+  <div><span class="k now">היום</span><p>הודעה אחת. אם חסר פרט, שאלה אחת. אחר כך ספקים.</p></div>
+ </div>
  <p class="eyebrow r">חיפוש ספקים למוצרים בלי מותג</p>
  <h1 class="r">ספקים, ישר מתוך<br class="d"> הצ׳אט שאתם כבר עובדים בו.</h1>
- <p class="lead r">כותבים ל-ChatGPT, ל-Claude או לכל סוכן AI אחר מה צריך, ומקבלים ספקים עם מחיר, מינימום הזמנה וסטטוס בדיקה. החיבור דרך MCP או API.</p>
- <p class="try-l r" id="tryl">נסו את ההדגמה כאן, בלי הרשמה:</p>
+ <p class="lead r">כותבים ל-ChatGPT, ל-Claude או לכל סוכן AI אחר מה צריך, ומקבלים ספקים עם מחיר, מינימום הזמנה, ומה כבר בדקנו ומה עוד לא.</p>
+ <p class="acts r"><a class="btn amber" href="#waitlist">קבלו את זה ראשונים בצ׳אט שלכם</a> <a class="btn ghost" href="#f">או נסו הדגמה כאן</a></p>
+ <p class="try-l r" id="tryl">הדגמה, בלי הרשמה:</p>
  <form id="f" class="ask r" role="search" aria-labelledby="tryl">
   <span class="pr" aria-hidden="true">›</span>
   <label for="q" class="sr">מה אתם מחפשים?</label>
@@ -26,25 +31,16 @@
   <button type="button" data-q="שרשראות כסף 925, 200 יח׳">שרשראות כסף 925</button>
  </div>
  <section class="chat" aria-live="polite" aria-label="תוצאות ההדגמה" hidden>
-  <p class="badge">הדגמה מוקלטת · נתונים מהמאגר מ-28.10.2026, לא מאומתים</p>
+  <p class="badge" id="mode">הדגמה מוקלטת · נתונים מהמאגר מ-28.10.2026</p>
   <div id="log"></div>
  </section>
 </header>
 
 <section class="works" aria-labelledby="ww">
  <p class="wrap cap" id="ww">עובד עם צ׳אטים וסוכנים שתומכים ב-MCP, לפי התיעוד הרשמי שלהם</p>
- <div class="marq"><ul class="track">
-  <li><span class="tx">Claude</span></li><li><span class="tx">ChatGPT</span></li><li><span class="tx">Gemini CLI</span></li>
-  <li><span class="tx">Grok API</span></li><li><span class="tx">Copilot Studio</span></li><li><span class="tx">Cursor</span></li>
-  <li><span class="tx">Perplexity</span></li><li><span class="tx">Mistral Le Chat</span></li>
- </ul></div>
-</section>
-
-<section class="wrap" aria-labelledby="ba">
- <h2 id="ba" class="sr">פעם והיום</h2>
- <div class="ba r">
-  <div><span class="k">פעם</span><p>מחפשים באתרי סיטונאות, בקבוצות ובמיילים, ומשווים לבד.</p></div>
-  <div><span class="k now">היום</span><p>הודעה אחת. אם חסר פרט, שאלה אחת. אחר כך ספקים.</p></div>
+ <div class="aig wrap">
+  <div><span class="k">בצ׳אט</span><p>Claude · ChatGPT · Copilot Studio · Perplexity · Mistral Le Chat</p></div>
+  <div><span class="k">למפתחים</span><p>Gemini CLI · Grok API · Cursor</p></div>
  </div>
 </section>
 
@@ -56,16 +52,16 @@
   <ol class="steps">
    <li class="r"><span class="mono">01</span><b>כותבים כמו לאדם</b>מה המוצר, כמה יחידות.</li>
    <li class="r"><span class="mono">02</span><b>שאלת הבהרה, אם צריך</b>למשל לאן המשלוח. היא לא נספרת כחיפוש.</li>
-   <li class="r"><span class="mono">03</span><b>ספקים עם סטטוס</b>מחיר, מינימום הזמנה, ומה עוד לא נבדק.</li>
+   <li class="r"><span class="mono">03</span><b>ספקים, ומה כבר בדקנו</b>מחיר, מינימום הזמנה, ומה עוד לא נבדק.</li>
   </ol>
  </div>
  <figure class="mock r" aria-label="איור: חלון צ׳אט כללי">
   <div class="bar"><i></i><i></i><i></i><span>הצ׳אט שלכם</span></div>
   <p class="mu">צריך ספק לחולצות כותנה, 500 יח׳, משלוח לישראל</p>
   <p class="mt"><span class="mono">sapakli</span></p>
-  <div class="mc"><b dir="ltr">Guangzhou Kangnai Apparel</b><span>₪7.91–18.98 · מינ׳ 100</span><em>לא מאומת</em></div>
-  <div class="mc"><b dir="ltr">Wuhan Nafu East Industry</b><span>₪4.75–6.30 · מינ׳ 200</span><em>לא מאומת</em></div>
-  <figcaption>איור להמחשה. הספקים והמחירים מהמאגר, 28.10.2026.</figcaption>
+  <div class="mc"><b dir="ltr">Guangzhou Kangnai Apparel</b><span>₪8–19 · מינ׳ 100</span><em>לא מאומת</em></div>
+  <div class="mc"><b dir="ltr">Wuhan Nafu East Industry</b><span>₪5–6 · מינ׳ 200</span><em>לא מאומת</em></div>
+  <figcaption>איור להמחשה. הספקים והמחירים מרשימות Alibaba, 28.10.2026, מעוגלים. המרה לפי 3.06 ₪ לדולר (שער שבדקנו ב-28.10.2026).</figcaption>
  </figure>
 </section>
 
@@ -83,7 +79,7 @@
  </form>
  <p id="wlm" class="wlm" role="status" aria-live="polite"></p>
  <div id="wli" class="wli" hidden>
-  <p><b>אתם ברשימה.</b> זה הקישור האישי שלכם. על כל חבר שנכנס דרכו ומבצע 3 חיפושים אמיתיים, תקבלו 3 חיפושים נוספים שלא פגים, עד 3 חברים.</p>
+  <p><b>אתם ברשימה<span id="pos"></span>.</b> זה הקישור האישי שלכם. חבר שנכנס דרכו מקבל את 3 החיפושים החינמיים הרגילים. אחרי שהוא מבצע 3 חיפושים, אתם מקבלים 3 חיפושים נוספים שלא פגים. עד 3 חברים, כלומר עד 9 חיפושים.</p>
   <div class="cp"><input id="lnk" readonly dir="ltr" aria-label="הקישור האישי שלכם"><button type="button" class="btn sm" id="cpb">העתיקו</button></div>
  </div>
 </div></section>
@@ -93,19 +89,31 @@
  <dl class="stats r">
   <div><dt>3</dt><dd>חיפושים חינם, מתחדשים כל 72 שעות</dd></div>
   <div><dt>0</dt><dd>חיפושים נספרים על שאלת הבהרה</dd></div>
-  <div><dt>7</dt><dd>ימים שהשיחה נשמרת, ואז נמחקת אוטומטית</dd></div>
-  <div><dt>20</dt><dd>ספקים במאגר נכון ל-28.10.2026. הוא עוד קטן</dd></div>
+  <div><dt>7</dt><dd>ימים שהשיחה נשמרת, ואז נמחקת אוטומטית. זו המדיניות שלנו</dd></div>
+  <div><dt>29</dt><dd>ספקים במאגר נכון ל-28.10.2026: 20 ביגוד, 5 אריזות, 4 תכשיטי כסף. הוא עוד קטן</dd></div>
  </dl>
  <p class="note r">תמחור לחיפוש נוסף עוד לא נקבע. יפורסם לפני שנגבה שקל.</p>
+</section>
+
+<section class="wrap narrow" id="verify" aria-labelledby="vf">
+ <h2 id="vf" class="r">איך אנחנו בודקים.</h2>
+ <p class="lead sm r">ליד כל ספק כתוב מה כבר בדקנו ומה עוד לא, עם תאריך הבדיקה וקישור למקור.</p>
+ <ul class="vlist r">
+  <li><b>האתר פעיל</b>פתחנו את האתר של הספק ובדקנו שהוא עונה.</li>
+  <li><b>ערוץ קשר</b>חיפשנו באתר מייל, טלפון או WhatsApp.</li>
+  <li><b>גיל הדומיין</b>לפי רישום הדומיין הציבורי (RDAP). דומיין צעיר זה לא פסול, אבל זו סיבה לשאול עוד.</li>
+  <li><b>מה עוד לא בדקנו</b>רישום עסקי רשמי בסין, תעודות (רק מה שהספק מצהיר), ביקורות לקוחות.</li>
+ </ul>
+ <p class="note r"><span class="vb part">נבדק חלקית</span> חלק מהבדיקות עברו. <span class="vb no">לא מאומת</span> עוד לא בדקנו. אף ספק עוד לא מסומן "מאומת", כי לא בדקנו רישום עסקי רשמי.</p>
 </section>
 
 <section class="wrap" id="connect" aria-labelledby="cn">
  <h2 id="cn" class="r">איך משתמשים.</h2>
  <p class="lead sm r">MCP הוא תקן פתוח שמאפשר לצ׳אט שלכם להשתמש בכלים חיצוניים, כמו חיפוש ספקים.</p>
  <div class="ways">
-  <div class="r"><h3>באתר <span class="live">זמין עכשיו</span></h3><p>נסו את ההדגמה למעלה. לחיפוש אמיתי נכנסים עם Google.</p></div>
-  <div class="r"><h3>בצ׳אט <span class="soon">רשימת המתנה</span></h3><p>מוסיפים את Sapakli כשרת MCP בהגדרות הצ׳אט.</p><code dir="ltr">Settings → Connectors → Add MCP server</code></div>
-  <div class="r"><h3>API <span class="soon">רשימת המתנה</span></h3><p>למפתחים, לאוטומציות ולמערכות שלכם.</p><code dir="ltr">POST /api/v1/search</code></div>
+  <div class="r"><h3>באתר <span class="live">זמין עכשיו</span></h3><p>נסו את ההדגמה למעלה, 3 חיפושים בלי הרשמה.</p></div>
+  <div class="r"><h3>בצ׳אט <span class="soon">רשימת המתנה</span></h3><p>כשהחיבור יהיה מוכן, נשלח לכם את ההוראות לצ׳אט שבחרתם.</p></div>
+  <div class="r"><h3>API <span class="soon">רשימת המתנה</span></h3><p>למפתחים, לאוטומציות ולמערכות שלכם. תיעוד מלא יישלח עם הגישה.</p></div>
  </div>
 </section>
 
@@ -114,18 +122,18 @@
 <details><summary>הספקים בדוקים?</summary><p>לא כולם. ליד כל ספק כתוב אם בדקנו אותו. אם כתוב "לא מאומת", בדקו בעצמכם לפני שאתם מזמינים.</p></details>
 <details><summary>המחיר כולל משלוח ומכס?</summary><p>לא. זה המחיר שהספק מפרסם, לפני משלוח, מכס ומע״מ.</p></details>
 <details><summary>מתי החיבור לצ׳אט יהיה זמין?</summary><p>עוד לא נקבע תאריך. מי שברשימת ההמתנה יקבל הודעה ראשון.</p></details>
-<details><summary>יש תוכנית חבר מביא חבר?</summary><p>כן. אחרי ההרשמה לרשימה תקבלו קישור אישי. על כל חבר שמבצע 3 חיפושים אמיתיים תקבלו 3 חיפושים נוספים שלא פגים, עד 3 חברים.</p></details>
+<details><summary>יש תוכנית חבר מביא חבר?</summary><p>כן. אחרי ההרשמה תקבלו קישור אישי. החבר מקבל את 3 החיפושים הרגילים, בלי תוספת. אחרי שהוא מבצע 3 חיפושים, אתם מקבלים 3 חיפושים שלא פגים. עד 3 חברים, עד 9 חיפושים בסך הכול.</p></details>
 <details><summary>מה זה MCP?</summary><p>תקן פתוח שמאפשר לצ׳אטים כמו Claude ו-ChatGPT להשתמש בכלים חיצוניים. אתם מוסיפים כתובת אחת בהגדרות, וזהו.</p></details>
 </section>
 
 <section class="wrap" aria-labelledby="cl"><div class="close r">
  <h2 id="cl">ספקים, מתוך הצ׳אט שאתם כבר עובדים בו.</h2>
- <p class="lead sm">היום באתר. בקרוב בצ׳אט שלכם.</p>
+ <p class="lead sm">שלושה דברים: מחיר ומינימום בהודעה אחת. שקיפות על מה נבדק. בלי אפליקציה חדשה.</p>
  <p class="acts"><a class="btn amber" href="#waitlist">הצטרפו לרשימת ההמתנה</a> <a class="btn ghost" href="#try">נסו את ההדגמה</a></p>
 </div></section>
 </main>
 <footer class="wrap"><span>© 2026 Sapakli</span><span><a href="legal/terms.html">תנאי שימוש (טיוטה)</a> · <a href="legal/privacy.html">פרטיות (טיוטה)</a></span>
 <small>שמות מוצרים שייכים לבעליהם. אין קשר או חסות. הרשימה מבוססת על התיעוד הרשמי של כל מוצר (docs/ai-connectors.md).</small></footer>
 <a class="sticky btn amber" href="#waitlist" id="stk">הצטרפו לרשימת ההמתנה</a>
-<script src="demo.js" defer></script>
+<script src="config.js"></script><script src="demo.js" defer></script>
 </body></html>

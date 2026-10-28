@@ -1,24 +1,48 @@
-// הדגמה מוקלטת – נתונים מ-docs/demo-results.md (28.10.2026). לא מחפש בזמן אמת.
-const U='לא מאומת',SHIRTS=[
- ['Jiangxi Anka Clothing Co., Ltd.','₪15.5 ליח׳','לא ידוע'],
- ['Guangzhou Kangnai Apparel Co., Ltd.','₪7.91–₪18.98 ליח׳','100 יח׳'],
- ['Wuhan Nafu East Industry & Trade Co., Ltd.','₪4.75–₪6.3 ליח׳','200 יח׳']];
+// הדגמה: אם window.SAPAKLI_API מוגדר (config.js) — חיפוש אמיתי מול השרת; אחרת הקלטה מ-docs/demo-results.md (28.10.2026).
+const API=(window.SAPAKLI_API||'').replace(/\/$/,'');
+const SHIRTS=[
+ ['Jiangxi Anka Clothing Co., Ltd.','₪16 ליח׳','לא ידוע'],
+ ['Guangzhou Kangnai Apparel Co., Ltd.','₪8–19 ליח׳','100 יח׳'],
+ ['Wuhan Nafu East Industry & Trade Co., Ltd.','₪5–6 ליח׳','200 יח׳']];
 const log=document.getElementById('log'),chat=document.querySelector('.chat'),q=document.getElementById('q'),go=document.getElementById('go');let busy=false;
 const slow=matchMedia('(prefers-reduced-motion: reduce)').matches?0:650;
 const dots=()=>{const d=el('a typing','<span></span><span></span><span></span>');d.setAttribute('aria-label','מקליד');return d};
 const el=(c,h)=>{const d=document.createElement('div');d.className='m '+c;d.innerHTML=h;log.appendChild(d);return d};
-const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const sid='demo-'+Math.random().toString(36).slice(2,12);let pending=false;
+const okUrl=u=>typeof u==='string'&&/^https:\/\/[^\s"'<>]+$/.test(u)?u:null;
+const fmtDate=d=>{const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(d||'');return m?`${+m[3]}.${+m[2]}.${m[1]}`:''};
+function card(s){const v=s.verification||null;const st=v&&v.status==='partial'?['part','נבדק חלקית']:s.verified?['part','מאומת']:['no','לא מאומת'];
+ let h=`<article class="card"><h3 dir="ltr">${esc(s.name)}</h3><span class="vb ${st[0]}">${st[1]}</span><dl><dt>מחיר</dt><dd>${esc((s.price||'').replace(/^מחיר:\s*/,''))}</dd><dt>מינימום</dt><dd>${esc((s.moq||'').replace(/^מינימום הזמנה:\s*/,''))}</dd></dl>`;
+ if(v){h+='<ul class="vck">'+(v.checks||[]).map(c=>`<li class="${c.ok?'ok':'bad'}">${esc(c.label)}${c.evidence&&!okUrl(c.evidence)?': '+esc(c.evidence):''}${okUrl(c.source)?` (<a href="${esc(c.source)}" target="_blank" rel="noopener nofollow">מקור</a>)`:''}</li>`).join('')+
+  (v.not_checked||[]).map(n=>`<li class="na">עוד לא נבדק: ${esc(n)}</li>`).join('')+'</ul>';
+  (v.cautions||[]).forEach(c=>h+=`<small>${esc(c)}</small>`);if(v.claims_note)h+=`<small>${esc(v.claims_note)}</small>`;}
+ const w=okUrl(s.website);if(w)h+=`<p class="src"><a href="${esc(w)}" target="_blank" rel="noopener nofollow">אתר הספק</a>${v&&v.checked_at?' · נבדק ב-'+fmtDate(v.checked_at):''}</p>`;
+ return h+'</article>'}
+async function live(t){const r=await fetch(API+'/api/demo/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request:t,session_id:sid})});
+ const j=await r.json().catch(()=>({}));if(r.status===402)return{s:'quota'};if(r.status===429)return{s:'rate'};if(!r.ok)throw new Error(r.status);return{s:'ok',j}}
 async function run(t){if(busy)return;busy=true;go.disabled=true;chat.setAttribute('aria-busy','true');
- try{chat.hidden=false;log.innerHTML='';el('u',esc(t));chat.scrollIntoView({behavior:slow?'smooth':'auto',block:'nearest'});let d=dots();await wait(slow);d.remove();
+ try{chat.hidden=false;if(!pending)log.innerHTML='';el('u',esc(t));chat.scrollIntoView({behavior:slow?'smooth':'auto',block:'nearest'});let d=dots();
+ if(API){try{const r=await live(t);d.remove();document.getElementById('mode').textContent='חיפוש אמיתי במאגר · מידע, לא המלצה';
+   if(r.s==='quota'){pending=false;el('a','נגמרו 3 החיפושים החינמיים להיום. הם מתחדשים כל 72 שעות. רוצים יותר? הצטרפו לרשימה, ועל כל חבר שמצטרף ומחפש תקבלו 3 חיפושים נוספים.')}
+   else if(r.s==='rate'){el('a','יותר מדי בקשות. נסו שוב בעוד דקה.')}
+   else{const j=r.j;if(j.status==='question'){pending=true;el('a',esc(j.question||j.reply));q.value='';q.focus();return}
+    pending=false;if(j.status==='blocked'){el('a',esc(j.reply))}
+    else if(j.suppliers&&j.suppliers.length){el('a',esc(j.summary||'')+'. המחיר לפני משלוח, מכס ומע"מ:<div class="cards">'+j.suppliers.map(card).join('')+'</div>')}
+    else el('a',esc(j.note||'עוד אין לנו ספקים מתאימים במאגר, ולא נמציא כאלה.'));
+    if(typeof j.left==='number')el('a',`נשארו לכם ${j.left} חיפושים חינמיים.`)}
+   el('a cta','<a class="btn amber" href="#waitlist">רוצים את זה בצ׳אט שלכם? הצטרפו לרשימה</a> <button type="button" class="lnkb" id="again">חיפוש אחר</button>');
+   document.getElementById('again').onclick=()=>{pending=false;q.value='';q.focus()};return}catch(_){/* נופלים להקלטה */}}
+ await wait(slow);d.remove();pending=false;
  const kind=/קופס|אריז/.test(t)?'box':/כסף|תכשיט|שרשר|925/.test(t)?'silver':/חולצ|טי|כותנה/.test(t)?'shirt':'other';
  el('a','לאן המשלוח, לישראל או למדינה אחרת?');await wait(slow);el('u','ישראל');d=dots();await wait(slow*1.4);d.remove();
  if(kind==='shirt'){
-  el('a','הנה ספקים שמצאתי. המחיר לפני משלוח, מכס ומע"מ:<div class="cards">'+SHIRTS.map(s=>
-   `<article class="card"><h3 dir="ltr">${s[0]}</h3><span class="tag">${U}</span><dl><dt>מחיר</dt><dd>${s[1]}</dd><dt>מינימום</dt><dd>${s[2]}</dd></dl></article>`).join('')+'</div>');
+  el('a','הנה ספקים שמצאתי. המחיר לפני משלוח, מכס ומע"מ, מעוגל, לפי 3.06 ₪ לדולר (28.10.2026):<div class="cards">'+SHIRTS.map(s=>
+   `<article class="card"><h3 dir="ltr">${s[0]}</h3><span class="vb no">לא מאומת</span><dl><dt>מחיר</dt><dd>${s[1]}</dd><dt>מינימום</dt><dd>${s[2]}</dd></dl></article>`).join('')+'</div>');
  }else if(kind==='other'){
-  el('a','ההדגמה מוקלטת ויש בה רק דוגמת חולצות. החיפוש האמיתי על הבקשה שלכם ייפתח עם החיבור לצ׳אט.');
- }else el('a','עוד אין לנו ספקים מתאימים במאגר, ולא נמציא כאלה. נוסיף כשנמצא ספקים אמיתיים.');
+  el('a','ההדגמה המוקלטת כוללת רק דוגמת חולצות. החיפוש האמיתי ייפתח כשהשרת יהיה זמין.');
+ }else el('a','בהדגמה המוקלטת אין דוגמה לזה. במאגר יש ספקים לאריזות ולתכשיטי כסף, והם יופיעו כשהשרת יהיה זמין.');
  el('a cta','<a class="btn amber" href="#waitlist">רוצים את זה בצ׳אט שלכם? הצטרפו לרשימה</a> <button type="button" class="lnkb" id="again">חיפוש אחר</button>');
  document.getElementById('again').onclick=()=>{q.value='';q.focus()};
  }finally{busy=false;go.disabled=false;chat.removeAttribute('aria-busy')}
@@ -42,13 +66,14 @@ const tr=document.querySelector('.track');if(tr)tr.innerHTML+=tr.innerHTML.repla
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){m.textContent=em?'כתובת המייל לא נראית תקינה. למשל: name@gmail.com':'כתבו כתובת מייל כדי להצטרף.';m.className='wlm err';f.email.setAttribute('aria-invalid','true');f.email.focus();return}
   f.email.removeAttribute('aria-invalid');m.className='wlm';
   const b=f.querySelector('button');b.disabled=true;b.setAttribute('aria-busy','true');m.textContent='שולחים...';
-  try{const r=await fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
+  try{if(!API){m.textContent='רשימת ההמתנה תיפתח בקרוב. תודה על הסבלנות!';return}
+   const r=await fetch(API+'/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({email:em,chat:f.chat.value||null,ref:ref&&/^[A-Za-z0-9]{4,16}$/.test(ref)?ref:null,website:f.website.value||null})});
    if(r.status===404||r.status===405||r.status>=500){m.textContent='רשימת ההמתנה תיפתח בקרוב. תודה על הסבלנות!';return}
    const j=await r.json().catch(()=>({}));
    if(!r.ok){m.textContent=(j.detail&&(j.detail.message||j.detail))||'משהו השתבש, נסו שוב.';return}
-   m.textContent='';f.hidden=true;box.hidden=false;
-   if(j.invite_code){lnk.value=location.origin+'/?invite='+encodeURIComponent(j.invite_code)}else box.querySelector('.cp').hidden=true;
+   m.textContent='';f.hidden=true;box.hidden=false;if(j.position)document.getElementById('pos').textContent=`, מקום ${j.position} בתור`;
+   if(j.invite_code){lnk.value=location.origin+location.pathname+'?invite='+encodeURIComponent(j.invite_code)}else box.querySelector('.cp').hidden=true;
   }catch(_){m.textContent='רשימת ההמתנה תיפתח בקרוב. תודה על הסבלנות!'}finally{b.disabled=false;b.removeAttribute('aria-busy')}});
  f.email.addEventListener('input',()=>{if(f.email.hasAttribute('aria-invalid')){f.email.removeAttribute('aria-invalid');m.textContent='';m.className='wlm'}});
  document.getElementById('cpb').onclick=async()=>{lnk.select();try{await navigator.clipboard.writeText(lnk.value);m.textContent='הקישור הועתק.'}catch(_){document.execCommand('copy')}};
